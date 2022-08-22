@@ -11,6 +11,7 @@ import "@percy/cypress";
 // Import commands for third-party auth providers
 import "./auth-provider-commands/auth0";
 import "./auth-provider-commands/okta";
+import { Login } from "../pages/login";
 
 // custom command to make taking snapshots with full name
 // formed from the test title + suffix easier
@@ -363,3 +364,10 @@ Cypress.Commands.add("loginByGoogleApi", () => {
     });
   });
 });
+
+// Custom command to login into the app
+Cypress.Commands.add("signIn", (username, password) => {
+  Login.typeUserName(username)
+  Login.typePassword(password)
+  Login.clickSignInButton()
+})
