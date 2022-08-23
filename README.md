@@ -124,11 +124,44 @@ yarn cypress:open
 
 ## Tests
 
-| Type | Location                                 |
-| ---- | ---------------------------------------- |
-| api  | [cypress/tests/api](./cypress/tests/api) |
-| ui   | [cypress/tests/ui](./cypress/tests/ui)   |
-| unit | [`src/__tests__`](./src/__tests__)       |
+The design pattern used in this project was Page Object Model (POM). So, in this project you will see a folder with all pages and another folder with the tests.
+
+In this spreadsheet you will find all test cases that were automated:
+
+https://docs.google.com/spreadsheets/d/1eO4H1epJDxURIeGLnNybcIpuA_mSgB6hQZbZA9JztH8/edit?usp=sharing
+
+In the following folder you will find the test files:
+- login.spec.ts
+- main-dashboard.spec.ts
+- signup.spec.ts
+
+| Type | Location                                                                     |
+| ---- | ---------------------------------------------------------------------------- |
+| ui   | [cypress/tests/learning-path-gap/ui](./cypress/tests/learning-path-gap/ui)   |
+
+In the following folder you will find the pages files:
+- login.ts
+- main-dashboard.ts
+- my-account.ts
+- notifications.ts
+- signup.ts
+- transactions.ts
+
+| Type | Location                           |
+| ---- | ---------------------------------- |
+| ui   | [cypress/pages](./cypress/pages)   |
+
+In order to run this project you will need to add a `cypress.env.json` file with this data user mock:
+`{
+    "user": "Katharina_Bernier",
+    "pass": "s3cret"
+}`
+
+In the `global.d.ts` file was add a new declaration of signIn method that was used to create a new custom command:
+`    
+     //Logs-in user by using UI (Jorge Carmona)
+     signIn(username: string, password: string): void;
+`
 
 ## Database
 
@@ -142,76 +175,6 @@ yarn cypress:open
 
 - An [empty database seed](./data/empty-seed.json) is provided along with a script (`yarn start:empty`) to view the application without data.
 
-## Additional NPM Scripts
-
-| Script         | Description                                                                                                                                                                       |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| dev            | Starts backend in watch mode and frontend                                                                                                                                         |
-| dev:auth0      | Starts backend in watch mode and frontend; [Uses Auth0 for Authentication](#auth0) > [Read Guide](http://on.cypress.io/auth0)                                                     |
-| dev:okta       | Starts backend in watch mode and frontend; [Uses Okta for Authentication](#okta) > [Read Guide](http://on.cypress.io/okta)                                                        |
-| dev:cognito    | Starts backend in watch mode and frontend; [Uses Cognito for Authentication](#amazon-cognito) > [Read Guide](http://on.cypress.io/amazon-cognito)                                 |
-| dev:google     | Starts backend in watch mode and frontend; [Uses Google for Authentication](#google) > [Read Guide](https://docs.cypress.io/guides/testing-strategies/google-authentication.html) |
-| start          | Starts backend and frontend                                                                                                                                                       |
-| types          | Validates types                                                                                                                                                                   |
-| db:seed        | Generates fresh database seeds for json files in /data                                                                                                                            |
-| start:empty    | Starts backend, frontend and Cypress with empty database seed                                                                                                                     |
-| tsnode         | Customized ts-node command to get around react-scripts restrictions                                                                                                               |
-| list:dev:users | Provides id and username for users in the dev database                                                                                                                            |
-
-For a complete list of scripts see [package.json](./package.json)
-
-## Code Coverage Report
-
-The Cypress Real-World App uses the [@cypress/code-coverage](https://github.com/cypress-io/code-coverage) plugin to generate code coverage reports for the app frontend and backend.
-
-To generate a code coverage report:
-
-1. Run `yarn cypress:run --env coverage=true` and wait for the test run to complete.
-2. Once the test run is complete, you can view the report at `coverage/index.html`.
-
-## 3rd Party Authentication Providers
-
-Support for 3rd party authentication is available in the application to demonstrate the concept and commands needed for programmatic login.
-
-### Auth0
-
-A [guide has been written with detail around adapting the RWA](http://on.cypress.io/auth0) to use [Auth0][auth0] and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an Auth0 account and a Tenant configured for use with a SPA. Environment variables from Auth0 are to be placed in the [.env](./.env).
-
-Start the application with `yarn dev:auth0` and run Cypress with `yarn cypress:open`.
-
-The only passing spec on this branch will be the [auth0 spec](./cypress/tests/ui-auth-providers/auth0.spec.ts); all others will fail.
-
-### Okta
-
-A [guide has been written with detail around adapting the RWA](http://on.cypress.io/okta) to use [Okta][okta] and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an [Okta][okta] account and [application configured for use with a SPA][oktacreateapp]. Environment variables from [Okta][okta] are to be placed in the [.env](./.env).
-
-Start the application with `yarn dev:okta` and run Cypress with `yarn cypress:open`.
-
-The **only passing spec on this branch** will be the [okta spec](./cypress/tests/ui-auth-providers/okta.spec.ts); all others will fail.
-
-### Amazon Cognito
-
-A [guide has been written with detail around adapting the RWA](http://on.cypress.io/amazon-cognito) to use [Amazon Cognito][cognito] as the authentication solution and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an [Amazon Cognito][cognito] account. Environment variables from [Amazon Cognito][cognito] are provided by the [AWS Amplify CLI][awsamplify].
-
-Start the application with `yarn dev:cognito` and run Cypress with `yarn cypress:open`.
-
-The **only passing spec on this branch** will be the [cognito spec](./cypress/tests/ui-auth-providers/cognito.spec.ts); all others will fail.
-
-### Google
-
-A [guide has been written with detail around adapting the RWA](https://docs.cypress.io/guides/testing-strategies/google-authentication.html) to use [Google][google] as the authentication solution and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an [Google][google] account. Environment variables from [Google][google] are to be placed in the [.env](./.env).
-
-Start the application with `yarn dev:google` and run Cypress with `yarn cypress:open`.
-
-The **only passing spec** when run with `yarn dev:google` will be the [google spec](./cypress/tests/ui-auth-providers/google.spec.ts); all others will fail.
 
 ## License
 
